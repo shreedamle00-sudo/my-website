@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Emotion Recognition System - RAVDESS ML Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                        accent: '#F59E0B',
+                        success: '#10B981',
+                        danger: '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-inter bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/95 backdrop-blur-sm shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-br from-primary to-secondary p-2 rounded-lg">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">AI Emotion Detection</h1>
+                        <p class="text-xs text-gray-500">RAVDESS ML System</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="nav-link text-gray-700 hover:text-primary transition-colors">Overview</a>
+                    <a href="#demo" class="nav-link text-gray-700 hover:text-primary transition-colors">Live Demo</a>
+                    <a href="#training" class="nav-link text-gray-700 hover:text-primary transition-colors">Training</a>
+                    <a href="#results" class="nav-link text-gray-700 hover:text-primary transition-colors">Results</a>
+                    <a href="#code" class="nav-link text-gray-700 hover:text-primary transition-colors">Code</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-200 hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#overview" class="mobile-nav-link block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Overview</a>
+                <a href="#demo" class="mobile-nav-link block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Live Demo</a>
+                <a href="#training" class="mobile-nav-link block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Training</a>
+                <a href="#results" class="mobile-nav-link block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Results</a>
+                <a href="#code" class="mobile-nav-link block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Code</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-8">
+                <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                    AI Emotion <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Recognition</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Deep learning system using Multi-Layer Perceptron (MLP) with 60-dimensional feature vectors from MFCC, Chroma, ZCR, and Spectral Contrast analysis. 
+                    Trained on 1,440 RAVDESS samples achieving 64.93% test accuracy across 8 emotion classes.
+                </p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#demo" class="btn-primary bg-primary hover:bg-secondary text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105">
+                    <i class="fas fa-microphone mr-2"></i>Try Live Demo
+                </a>
+                <a href="#results" class="btn-secondary border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-semibold transition-all">
+                    <i class="fas fa-chart-bar mr-2"></i>View Results
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Project Overview</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Neural network-based emotion classifier trained on RAVDESS dataset using scikit-learn MLPClassifier with 60-dimensional audio feature vectors
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="feature-card bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
+                    <div class="bg-primary p-3 rounded-lg w-fit mb-4">
+                        <i class="fas fa-database text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">RAVDESS Dataset</h3>
+                    <p class="text-gray-600 mb-3">1,440 audio samples (24 actors × 8 emotions × 2 intensities × 2 statements) at 48kHz downsampled to 22.05kHz, 3-second duration with silence trimming.</p>
+                    <div class="text-sm text-blue-700 bg-blue-100 px-3 py-1 rounded-full inline-block">
+                        Actor_01-24 folders
+                    </div>
+                </div>
+                <div class="feature-card bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
+                    <div class="bg-success p-3 rounded-lg w-fit mb-4">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">MLP Architecture</h3>
+                    <p class="text-gray-600 mb-3">3-hidden-layer MLP: 60→256→128→64→8 with ReLU activation, Adam optimizer (α=0.001), early stopping after 10 epochs without improvement.</p>
+                    <div class="text-sm text-green-700 bg-green-100 px-3 py-1 rounded-full inline-block">
+                        53 epochs trained
+                    </div>
+                </div>
+                <div class="feature-card bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-100">
+                    <div class="bg-purple-600 p-3 rounded-lg w-fit mb-4">
+                        <i class="fas fa-wave-square text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Audio Features (60D)</h3>
+                    <p class="text-gray-600 mb-3">MFCC (n=40) + Chroma (n=12) + ZCR (n=1) + Spectral Contrast (n=7). StandardScaler normalization applied before training.</p>
+                    <div class="text-sm text-purple-700 bg-purple-100 px-3 py-1 rounded-full inline-block">
+                        Librosa extraction
+                    </div>
+                </div>
+            </div>
+
+            <!-- RAVDESS Dataset Details -->
+            <div class="bg-gray-50 rounded-2xl p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6 text-center">RAVDESS Dataset Specifications</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-semibold text-gray-800 mb-4">Technical Specifications</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Original Sample Rate:</span>
+                                <span class="font-mono">48,000 Hz</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Processing Sample Rate:</span>
+                                <span class="font-mono">22,050 Hz</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Audio Duration:</span>
+                                <span class="font-mono">~3 seconds</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">File Format:</span>
+                                <span class="font-mono">.wav (uncompressed)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Bit Depth:</span>
+                                <span class="font-mono">16-bit</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Channels:</span>
+                                <span class="font-mono">Mono (1 channel)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h4 class="font-semibold text-gray-800 mb-4">Dataset Composition</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Actors:</span>
+                                <span class="font-mono">24 (12 male, 12 female)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Emotions:</span>
+                                <span class="font-mono">8 categories</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Intensities:</span>
+                                <span class="font-mono">2 levels (normal, strong)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Statements:</span>
+                                <span class="font-mono">2 per emotion</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Repetitions:</span>
+                                <span class="font-mono">2 per statement</span>
+                            </div>
+                            <div class="flex justify-between border-t pt-2 mt-3">
+                                <span class="text-gray-600 font-semibold">Total Files:</span>
+                                <span class="font-mono font-bold">1,440 samples</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Emotion Distribution</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😠</div>
+                        <div class="font-semibold text-gray-900">Angry (05)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 05</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😌</div>
+                        <div class="font-semibold text-gray-900">Calm (02)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 02</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">🤢</div>
+                        <div class="font-semibold text-gray-900">Disgust (07)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 07</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😨</div>
+                        <div class="font-semibold text-gray-900">Fearful (06)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 06</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😊</div>
+                        <div class="font-semibold text-gray-900">Happy (03)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 03</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😐</div>
+                        <div class="font-semibold text-gray-900">Neutral (01)</div>
+                        <div class="text-sm text-red-500">96 samples (6.7%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 01 - Imbalanced!</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😢</div>
+                        <div class="font-semibold text-gray-900">Sad (04)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 04</div>
+                    </div>
+                    <div class="emotion-card text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="text-3xl mb-2">😲</div>
+                        <div class="font-semibold text-gray-900">Surprised (08)</div>
+                        <div class="text-sm text-gray-500">192 samples (13.3%)</div>
+                        <div class="text-xs text-gray-400 mt-1">Code: 08</div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                    <p class="text-sm text-yellow-800">
+                        <strong>Note:</strong> Neutral emotion has only 96 samples (half of others), creating class imbalance that affects model performance. 
+                        This explains the lower recall (42%) but higher precision (73%) for neutral emotions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4">🎤 Live Emotion Detection Demo</h2>
+                <p class="text-xl text-blue-100">Experience real-time emotion recognition (Simulation)</p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                <div class="text-center mb-8">
+                    <div id="demo-status" class="text-lg font-semibold mb-4">Click "Start Recording" to begin</div>
+                    <button id="record-btn" class="bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform hover:scale-105 active:scale-95">
+                        <i class="fas fa-microphone mr-2"></i>Start Recording
+                    </button>
+                </div>
+
+                <div id="demo-results" class="hidden">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Real-time Audio Analysis</h4>
+                            <div class="space-y-4">
+                                <div class="bg-gray-800/20 p-3 rounded">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm">Max Amplitude:</span>
+                                        <span id="audio-level" class="font-mono text-green-300">0.000</span>
+                                    </div>
+                                    <div class="text-xs text-gray-300">Peak audio signal strength (0.0-1.0)</div>
+                                </div>
+                                <div class="bg-gray-800/20 p-3 rounded">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm">RMS Energy:</span>
+                                        <span id="energy-level" class="font-mono text-blue-300">0.0000</span>
+                                    </div>
+                                    <div class="text-xs text-gray-300">Root mean square energy (voice intensity)</div>
+                                </div>
+                                <div class="bg-gray-800/20 p-3 rounded">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm">Zero Crossing Rate:</span>
+                                        <span id="zcr-level" class="font-mono text-purple-300">0.0000</span>
+                                    </div>
+                                    <div class="text-xs text-gray-300">Sign changes per frame (speech/noise indicator)</div>
+                                </div>
+                                <div class="bg-gray-800/20 p-3 rounded">
+                                    <div class="text-xs text-gray-300">
+                                        <strong>Processing:</strong> 22.05kHz → 3sec → trim silence → normalize → 60D features
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Emotion Prediction</h4>
+                            <div id="emotion-result" class="text-2xl font-bold text-accent mb-4">Processing...</div>
+                            <div id="confidence-bars" class="space-y-2">
+                                <!-- Confidence bars will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-4 bg-blue-900/30 rounded-lg">
+                    <h4 class="font-semibold mb-2">💡 Technical Notes & Tips:</h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <strong class="text-blue-200">Audio Processing:</strong>
+                            <ul class="text-blue-100 mt-1 space-y-1">
+                                <li>• Model trained on acted emotions (exaggerated)</li>
+                                <li>• Optimal range: 0.05-0.4 max amplitude</li>
+                                <li>• ZCR: Higher values indicate anger/excitement</li>
+                                <li>• Energy: Correlates with emotional intensity</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong class="text-blue-200">Best Practices:</strong>
+                            <ul class="text-blue-100 mt-1 space-y-1">
+                                <li>• Speak expressively (theatrical style)</li>
+                                <li>• Use complete sentences (2-3 seconds)</li>
+                                <li>• Clear articulation improves MFCC features</li>
+                                <li>• Minimize background noise for better ZCR</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 bg-green-900/30 rounded-lg">
+                    <h4 class="font-semibold mb-2">📝 Example Phrases (Based on RAVDESS Training Data):</h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="space-y-2">
+                            <div class="text-green-100">😊 <strong>Happy (63% precision):</strong><br>"Kids are talking by the door" (excited tone)</div>
+                            <div class="text-green-100">😢 <strong>Sad (59% precision):</strong><br>"Dogs are sitting by the door" (melancholy)</div>
+                            <div class="text-green-100">😠 <strong>Angry (69% precision):</strong><br>"Kids are talking by the door" (frustrated)</div>
+                            <div class="text-green-100">😐 <strong>Neutral (73% precision):</strong><br>"Dogs are sitting by the door" (monotone)</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-green-100">😌 <strong>Calm (70% precision):</strong><br>"Say the word web" (peaceful tone)</div>
+                            <div class="text-green-100">😨 <strong>Fearful (62% precision):</strong><br>"Say the word web" (anxious/worried)</div>
+                            <div class="text-green-100">🤢 <strong>Disgust (56% precision):</strong><br>"Kids are talking" (disgusted tone)</div>
+                            <div class="text-green-100">😲 <strong>Surprised (70% precision):</strong><br>"Dogs are sitting!" (shocked/amazed)</div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-xs text-green-200 border-t border-green-700 pt-2">
+                        <strong>Note:</strong> RAVDESS uses two main sentences: "Kids are talking by the door" and "Dogs are sitting by the door" + "Say the word web"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Pipeline Section -->
+    <section id="training" class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Training Pipeline</h2>
+                <p class="text-xl text-gray-600">Step-by-step process of building the emotion recognition model</p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Step 1: Data Loading -->
+                <div class="training-step flex items-start space-x-6 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-primary p-3 rounded-full flex-shrink-0">
+                        <span class="text-white font-bold text-lg">1</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Data Loading & Processing</h3>
+                        <p class="text-gray-600 mb-4">Loading 1,440 audio files from RAVDESS dataset and extracting emotion labels from filenames.</p>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="grid md:grid-cols-3 gap-4 text-sm">
+                                <div><strong>Total Files:</strong> 1,440</div>
+                                <div><strong>Sample Rate:</strong> 22,050 Hz</div>
+                                <div><strong>Duration:</strong> 3 seconds each</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Feature Extraction -->
+                <div class="training-step flex items-start space-x-6 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-success p-3 rounded-full flex-shrink-0">
+                        <span class="text-white font-bold text-lg">2</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Feature Extraction</h3>
+                        <p class="text-gray-600 mb-4">Extracting 60 audio features that capture emotional characteristics of speech.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-900 mb-2">MFCCs (40 features)</h4>
+                                <p class="text-sm text-blue-700 mb-2">librosa.feature.mfcc(n_mfcc=40), DCT of log mel-filterbank energies</p>
+                                <code class="text-xs bg-blue-100 px-2 py-1 rounded">np.mean(...).T, axis=0)</code>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-900 mb-2">Chroma STFT (12 features)</h4>
+                                <p class="text-sm text-green-700 mb-2">librosa.feature.chroma_stft(), 12-dimensional pitch class profiles</p>
+                                <code class="text-xs bg-green-100 px-2 py-1 rounded">Chromagram mapping</code>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-purple-900 mb-2">Zero Crossing Rate (1 feature)</h4>
+                                <p class="text-sm text-purple-700 mb-2">librosa.feature.zero_crossing_rate(), sign changes per frame</p>
+                                <code class="text-xs bg-purple-100 px-2 py-1 rounded">Speech/Noise indicator</code>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-orange-900 mb-2">Spectral Contrast (7 features)</h4>
+                                <p class="text-sm text-orange-700 mb-2">librosa.feature.spectral_contrast(), peak-valley differences across octave bands</p>
+                                <code class="text-xs bg-orange-100 px-2 py-1 rounded">7 sub-band analysis</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Model Training -->
+                <div class="training-step flex items-start space-x-6 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-purple-600 p-3 rounded-full flex-shrink-0">
+                        <span class="text-white font-bold text-lg">3</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Neural Network Training</h3>
+                        <p class="text-gray-600 mb-4">MLPClassifier with Adam optimizer (α=0.001), ReLU activation, validation_fraction=0.1, tol=1e-4, early stopping enabled.</p>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <div class="flex justify-center items-center space-x-4">
+                                <div class="text-center">
+                                    <div class="w-16 h-8 bg-blue-200 rounded flex items-center justify-center text-xs font-semibold">Input</div>
+                                    <div class="text-xs mt-1">60 features</div>
+                                </div>
+                                <div class="text-gray-400">→</div>
+                                <div class="text-center">
+                                    <div class="w-16 h-12 bg-blue-400 rounded flex items-center justify-center text-xs font-semibold text-white">Hidden</div>
+                                    <div class="text-xs mt-1">256 neurons</div>
+                                </div>
+                                <div class="text-gray-400">→</div>
+                                <div class="text-center">
+                                    <div class="w-16 h-10 bg-blue-500 rounded flex items-center justify-center text-xs font-semibold text-white">Hidden</div>
+                                    <div class="text-xs mt-1">128 neurons</div>
+                                </div>
+                                <div class="text-gray-400">→</div>
+                                <div class="text-center">
+                                    <div class="w-16 h-8 bg-blue-600 rounded flex items-center justify-center text-xs font-semibold text-white">Hidden</div>
+                                    <div class="text-xs mt-1">64 neurons</div>
+                                </div>
+                                <div class="text-gray-400">→</div>
+                                <div class="text-center">
+                                    <div class="w-16 h-6 bg-green-500 rounded flex items-center justify-center text-xs font-semibold text-white">Output</div>
+                                    <div class="text-xs mt-1">8 emotions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-900 mb-2">Training Configuration</h4>
+                                <div class="text-sm space-y-1">
+                                    <div><strong>Train/Validation/Test:</strong> 1,152/115/288 samples</div>
+                                    <div><strong>Stratified Split:</strong> random_state=42</div>
+                                    <div><strong>Max Iterations:</strong> 500 (stopped at 53)</div>
+                                    <div><strong>Solver:</strong> Adam optimizer</div>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-900 mb-2">Training Results</h4>
+                                <div class="text-sm space-y-1">
+                                    <div><strong>Final Loss:</strong> 0.02645114</div>
+                                    <div><strong>Best Val Score:</strong> 0.681034 (epoch 50)</div>
+                                    <div><strong>Early Stopping:</strong> No improvement for 10 epochs</div>
+                                    <div><strong>Convergence:</strong> tol < 0.0001 reached</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Model Performance</h2>
+                <p class="text-xl text-gray-600">Comprehensive analysis of training results and accuracy metrics</p>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="grid md:grid-cols-4 gap-6 mb-16">
+                <div class="metric-card text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-primary mb-2">96.88%</div>
+                    <div class="text-gray-600 font-medium">Training Accuracy</div>
+                </div>
+                <div class="metric-card text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-success mb-2">64.93%</div>
+                    <div class="text-gray-600 font-medium">Testing Accuracy</div>
+                </div>
+                <div class="metric-card text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-purple-600 mb-2">1,440</div>
+                    <div class="text-gray-600 font-medium">Total Samples</div>
+                </div>
+                <div class="metric-card text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-orange-600 mb-2">8</div>
+                    <div class="text-gray-600 font-medium">Emotion Classes</div>
+                </div>
+            </div>
+
+            <!-- Charts Container -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Dataset Distribution Chart -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Dataset Distribution</h3>
+                    <div style="height: 400px;">
+                        <canvas id="datasetChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Model Performance Chart -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Classification Performance</h3>
+                    <div style="height: 400px;">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classification Report -->
+            <div class="bg-white p-8 rounded-xl shadow-sm">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">Detailed Classification Report</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Emotion</th>
+                                <th class="text-center py-3 px-4 font-semibold text-gray-900">Precision</th>
+                                <th class="text-center py-3 px-4 font-semibold text-gray-900">Recall</th>
+                                <th class="text-center py-3 px-4 font-semibold text-gray-900">F1-Score</th>
+                                <th class="text-center py-3 px-4 font-semibold text-gray-900">Support</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😠 Angry</td>
+                                <td class="text-center py-3 px-4">0.69</td>
+                                <td class="text-center py-3 px-4">0.66</td>
+                                <td class="text-center py-3 px-4">0.68</td>
+                                <td class="text-center py-3 px-4">38</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😌 Calm</td>
+                                <td class="text-center py-3 px-4">0.70</td>
+                                <td class="text-center py-3 px-4">0.87</td>
+                                <td class="text-center py-3 px-4">0.78</td>
+                                <td class="text-center py-3 px-4">38</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">🤢 Disgust</td>
+                                <td class="text-center py-3 px-4">0.56</td>
+                                <td class="text-center py-3 px-4">0.58</td>
+                                <td class="text-center py-3 px-4">0.57</td>
+                                <td class="text-center py-3 px-4">38</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😨 Fearful</td>
+                                <td class="text-center py-3 px-4">0.62</td>
+                                <td class="text-center py-3 px-4">0.67</td>
+                                <td class="text-center py-3 px-4">0.64</td>
+                                <td class="text-center py-3 px-4">39</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😊 Happy</td>
+                                <td class="text-center py-3 px-4">0.63</td>
+                                <td class="text-center py-3 px-4">0.49</td>
+                                <td class="text-center py-3 px-4">0.55</td>
+                                <td class="text-center py-3 px-4">39</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😐 Neutral</td>
+                                <td class="text-center py-3 px-4">0.73</td>
+                                <td class="text-center py-3 px-4">0.42</td>
+                                <td class="text-center py-3 px-4">0.53</td>
+                                <td class="text-center py-3 px-4">19</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😢 Sad</td>
+                                <td class="text-center py-3 px-4">0.59</td>
+                                <td class="text-center py-3 px-4">0.58</td>
+                                <td class="text-center py-3 px-4">0.59</td>
+                                <td class="text-center py-3 px-4">38</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-3 px-4">😲 Surprised</td>
+                                <td class="text-center py-3 px-4">0.70</td>
+                                <td class="text-center py-3 px-4">0.82</td>
+                                <td class="text-center py-3 px-4">0.75</td>
+                                <td class="text-center py-3 px-4">39</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Confusion Matrix Analysis -->
+            <div class="bg-white p-8 rounded-xl shadow-sm mt-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">Confusion Matrix Analysis</h3>
+                <p class="text-gray-600 mb-6">Predicted vs. Actual emotion classifications on test set (288 samples)</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-4">Confusion Matrix (Test Set)</h4>
+                        <div class="overflow-x-auto">
+                            <table class="text-xs border border-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="p-2 border-r border-gray-200 font-semibold">Actual \\ Predicted</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Ang</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Calm</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Dis</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Fear</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Hap</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Neu</th>
+                                        <th class="p-2 border-r border-gray-200 text-center">Sad</th>
+                                        <th class="p-2 text-center">Sur</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Angry</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">25</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 text-center">2</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Calm</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">33</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 text-center">0</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Disgust</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">5</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">22</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 text-center">2</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Fearful</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">26</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">5</td>
+                                        <td class="p-2 text-center">1</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Happy</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">4</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">19</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">4</td>
+                                        <td class="p-2 text-center">5</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Neutral</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">8</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 text-center">2</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200">
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Sad</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">5</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">3</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center bg-green-100 font-bold">22</td>
+                                        <td class="p-2 text-center">2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border-r border-gray-200 font-semibold bg-gray-50">Surprised</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">2</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">1</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 border-r border-gray-200 text-center">0</td>
+                                        <td class="p-2 text-center bg-green-100 font-bold">32</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-4">Key Insights</h4>
+                        <div class="space-y-4 text-sm">
+                            <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-400">
+                                <strong class="text-green-800">Best Performing:</strong>
+                                <ul class="text-green-700 mt-1 space-y-1">
+                                    <li>• <strong>Calm</strong>: 87% recall (33/38 correctly identified)</li>
+                                    <li>• <strong>Surprised</strong>: 82% recall (32/39 correctly identified)</li>
+                                    <li>• <strong>Neutral</strong>: 73% precision (8/11 predictions correct)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-400">
+                                <strong class="text-orange-800">Common Confusions:</strong>
+                                <ul class="text-orange-700 mt-1 space-y-1">
+                                    <li>• <strong>Fearful → Sad</strong>: 5/39 samples (voice trembling similarity)</li>
+                                    <li>• <strong>Disgust → Angry</strong>: 5/38 samples (negative valence overlap)</li>
+                                    <li>• <strong>Happy → Surprised</strong>: 5/39 samples (high arousal similarity)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
+                                <strong class="text-blue-800">Class Imbalance Impact:</strong>
+                                <ul class="text-blue-700 mt-1 space-y-1">
+                                    <li>• <strong>Neutral</strong>: Only 96 samples (vs 192 others)</li>
+                                    <li>• Lower recall (42%) but higher precision (73%)</li>
+                                    <li>• Model conservative in predicting neutral emotions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Section -->
+    <section id="code" class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Implementation Details</h2>
+                <p class="text-xl text-gray-600">Complete source code and technical explanations</p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Training Code -->
+                <div class="code-section bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50">
+                        <h3 class="text-xl font-semibold text-gray-900">Training Pipeline Code</h3>
+                        <button class="code-toggle text-primary hover:text-secondary" data-target="training-code">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="training-code" class="hidden">
+                        <pre class="code-block p-6 text-sm bg-gray-900 text-gray-100 overflow-x-auto"><code># RAVDESS Emotion Recognition - Complete Training Pipeline
+
+import os
+import numpy as np
+import librosa
+import joblib
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+import glob
+
+# Configuration
+DATASET_PATH = r"D:\VS_Code_DS_Python\ML projest 3rd year\dataset\ALL"
+MODEL_SAVE_PATH = "emotion_model.pkl"
+SAMPLE_RATE = 22050
+
+# RAVDESS emotion mapping (filename format: 03-01-{emotion}-...)
+EMOTION_MAP = {
+    '01': 'neutral', '02': 'calm', '03': 'happy', '04': 'sad',
+    '05': 'angry', '06': 'fearful', '07': 'disgust', '08': 'surprised'
+}
+
+def extract_features(file_path):
+    """Extract 60-dimensional feature vector from audio file"""
+    try:
+        # Load audio: 22.05kHz, 3 seconds max
+        y, sr = librosa.load(file_path, sr=SAMPLE_RATE, duration=3)
+        
+        # Preprocessing: trim silence (top_db=20) and normalize
+        y, _ = librosa.effects.trim(y, top_db=20)
+        y = librosa.util.normalize(y)
+        
+        # Feature extraction (60 total features)
+        mfccs = np.mean(librosa.feature.mfcc(y=y, sr=sr, n_mfcc=40).T, axis=0)           # 40
+        chroma = np.mean(librosa.feature.chroma_stft(y=y, sr=sr).T, axis=0)              # 12  
+        zcr = np.mean(librosa.feature.zero_crossing_rate(y).T, axis=0)                   # 1
+        spec_contrast = np.mean(librosa.feature.spectral_contrast(y=y, sr=sr).T, axis=0) # 7
+        
+        return np.hstack([mfccs, chroma, zcr, spec_contrast])
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
+        return None
+
+def get_emotion_from_filename(filename):
+    """Extract emotion from RAVDESS filename: 03-01-{emotion}-..."""
+    parts = os.path.basename(filename).split('-')
+    if len(parts) >= 3:
+        return EMOTION_MAP.get(parts[2], None)
+    return None
+
+# Model Configuration (Exact hyperparameters used)
+model = MLPClassifier(
+    hidden_layer_sizes=(256, 128, 64),    # 3 hidden layers
+    activation='relu',                     # ReLU activation
+    solver='adam',                         # Adam optimizer
+    alpha=0.0001,                         # L2 regularization
+    learning_rate_init=0.001,             # Initial learning rate
+    max_iter=500,                         # Maximum epochs
+    early_stopping=True,                  # Early stopping enabled
+    validation_fraction=0.1,              # 10% for validation
+    n_iter_no_change=10,                  # Patience for early stopping
+    tol=0.0001,                          # Tolerance for optimization
+    random_state=42,                      # Reproducibility
+    verbose=True                          # Training progress
+)
+
+# Actual Training Results from Output:
+# ================================
+# Dataset: 1,440 files processed successfully
+# Train/Test Split: 1,152/288 (80%/20% stratified)
+# Training Accuracy: 96.88%
+# Testing Accuracy: 64.93%
+# Epochs Trained: 53 (early stopped)
+# Final Loss: 0.02645114
+# Best Validation Score: 0.681034 (epoch 50)</code></pre>
+                    </div>
+                </div>
+
+                <!-- Live Detection Code -->
+                <div class="code-section bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50">
+                        <h3 class="text-xl font-semibold text-gray-900">Live Detection Code</h3>
+                        <button class="code-toggle text-primary hover:text-secondary" data-target="detection-code">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="detection-code" class="hidden">
+                        <pre class="code-block p-6 text-sm bg-gray-900 text-gray-100 overflow-x-auto"><code># Live Emotion Detection System
+
+import sounddevice as sd
+import joblib
+
+# Load trained model
+model, encoder, scaler = joblib.load("emotion_model.pkl")
+
+def record_and_predict(seconds=3, fs=22050):
+    print("🎙️ Recording... Speak now!")
+    recording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
+    sd.wait()
+    
+    # Extract same features as training
+    y = recording.flatten()
+    features = extract_features_live(y, fs).reshape(1, -1)
+    
+    # Normalize and predict
+    features = scaler.transform(features)
+    pred = model.predict(features)[0]
+    emotion = encoder.inverse_transform([pred])[0]
+    
+    # Get confidence scores
+    proba = model.predict_proba(features)[0]
+    emotions = encoder.inverse_transform(range(len(proba)))
+    
+    # Display results with confidence bars
+    for emo, prob in sorted(zip(emotions, proba), key=lambda x: -x[1])[:3]:
+        bar = "█" * int(prob * 20) + "░" * (20 - int(prob * 20))
+        print(f"{emo:12s} {bar} {prob*100:5.1f}%")
+    
+    return emotion</code></pre>
+                    </div>
+                </div>
+
+                <!-- Technical Architecture -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-100">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">🔧 Complete Technical Architecture</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-blue-900 mb-3">Data Pipeline</h4>
+                            <div class="text-sm text-blue-800 space-y-2">
+                                <div class="bg-white p-2 rounded">
+                                    <strong>Audio Preprocessing:</strong><br>
+                                    • librosa.load(sr=22050, duration=3)<br>
+                                    • librosa.effects.trim(top_db=20)<br>
+                                    • librosa.util.normalize()
+                                </div>
+                                <div class="bg-white p-2 rounded">
+                                    <strong>Feature Engineering:</strong><br>
+                                    • MFCC: n_mfcc=40, mean across time<br>
+                                    • Chroma: 12-bin chromagram<br>
+                                    • ZCR: Zero crossing rate<br>
+                                    • Spectral Contrast: 7 sub-bands
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-blue-900 mb-3">ML Architecture</h4>
+                            <div class="text-sm text-blue-800 space-y-2">
+                                <div class="bg-white p-2 rounded">
+                                    <strong>MLPClassifier Config:</strong><br>
+                                    • hidden_layer_sizes=(256,128,64)<br>
+                                    • activation='relu'<br>
+                                    • solver='adam', alpha=0.0001<br>
+                                    • learning_rate_init=0.001
+                                </div>
+                                <div class="bg-white p-2 rounded">
+                                    <strong>Training Strategy:</strong><br>
+                                    • Early stopping enabled<br>
+                                    • validation_fraction=0.1<br>
+                                    • tol=0.0001, max_iter=500<br>
+                                    • Stratified train/test split
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-blue-900 mb-3">Performance Results</h4>
+                            <div class="text-sm text-blue-800 space-y-2">
+                                <div class="bg-white p-2 rounded">
+                                    <strong>Training Metrics:</strong><br>
+                                    • Training Acc: 96.88%<br>
+                                    • Test Acc: 64.93%<br>
+                                    • Epochs: 53 (early stopped)<br>
+                                    • Final Loss: 0.026451
+                                </div>
+                                <div class="bg-white p-2 rounded">
+                                    <strong>Class Performance:</strong><br>
+                                    • Best: Calm (87% recall)<br>
+                                    • Worst: Happy (49% recall)<br>
+                                    • Avg F1-Score: 0.64<br>
+                                    • Macro Avg: 0.65 precision
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded">
+                        <h5 class="font-semibold text-yellow-800 mb-2">Model Limitations & Considerations</h5>
+                        <div class="text-sm text-yellow-700 grid md:grid-cols-2 gap-4">
+                            <div>
+                                <strong>Training Data Bias:</strong><br>
+                                • Acted emotions (not natural speech)<br>
+                                • Limited vocabulary (2 main sentences)<br>
+                                • Professional actors (consistent quality)<br>
+                                • Controlled recording environment
+                            </div>
+                            <div>
+                                <strong>Real-world Challenges:</strong><br>
+                                • Background noise degrades features<br>
+                                • Individual expression variations<br>
+                                • Cultural/linguistic differences<br>
+                                • Subtle emotions harder to detect
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold mb-2">AI Emotion Recognition System</h3>
+                <p class="text-gray-400">Built with Machine Learning and Neural Networks</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 text-sm">
+                <div>
+                    <h4 class="font-semibold mb-2">Technologies Used</h4>
+                    <ul class="text-gray-400 space-y-1">
+                        <li>Python & Librosa</li>
+                        <li>Scikit-learn</li>
+                        <li>Neural Networks</li>
+                        <li>RAVDESS Dataset</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">Key Features</h4>
+                    <ul class="text-gray-400 space-y-1">
+                        <li>Real-time Detection</li>
+                        <li>8 Emotion Classes</li>
+                        <li>60 Audio Features</li>
+                        <li>64.93% Accuracy</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">Model Performance</h4>
+                    <ul class="text-gray-400 space-y-1">
+                        <li>1,440 Training Samples</li>
+                        <li>Multi-layer Perceptron</li>
+                        <li>Early Stopping</li>
+                        <li>Cross-validation</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-gray-400">
+                <p>&copy; 2024 AI Emotion Recognition Project. Machine Learning Implementation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/demo.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
