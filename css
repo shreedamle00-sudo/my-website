@@ -1,0 +1,222 @@
+/* Custom CSS for AI Emotion Recognition Website */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Utility classes */
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Feature card hover effects */
+.feature-card {
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Emotion card hover effects */
+.emotion-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.emotion-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Metric card animations */
+.metric-card {
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Button animations */
+.btn-primary, .btn-secondary {
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Code block styling */
+.code-block {
+    max-height: 600px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+}
+
+.code-block::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.code-block::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+/* Training step animations */
+.training-step {
+    transition: all 0.3s ease;
+}
+
+.training-step:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+
+/* Chart container styling */
+.chart-container {
+    transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation link active state */
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #3b82f6;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Mobile menu animation */
+#mobile-menu {
+    transition: all 0.3s ease;
+}
+
+/* Recording button pulse animation */
+@keyframes recording-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+}
+
+#record-btn.recording {
+    animation: recording-pulse 1.5s infinite;
+}
+
+/* Confidence bar animations */
+.confidence-bar {
+    transition: width 0.5s ease-out;
+}
+
+/* Table styling improvements */
+table {
+    border-collapse: collapse;
+}
+
+table th, table td {
+    transition: background-color 0.2s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .code-block {
+        font-size: 12px;
+    }
+    
+    .feature-card, .metric-card {
+        transform: none !important;
+    }
+}
+
+/* Loading spinner */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fa-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Section transitions */
+section {
+    transition: all 0.3s ease;
+}
+
+/* Footer links hover */
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #3b82f6;
+}
